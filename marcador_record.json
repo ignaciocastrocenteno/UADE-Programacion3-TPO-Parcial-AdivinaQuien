@@ -1,0 +1,8 @@
+{
+  "marcador": [
+    {"jugador": "Máquina 1 (Greedy)", "victorias": 5},
+    {"jugador": "JugadorA", "victorias": 2},
+    {"jugador": "JugadorB", "victorias": 1},
+    {"jugador": "Máquina 2 (Asertiva)", "victorias": 6}
+  ]
+}
