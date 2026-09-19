@@ -1,0 +1,281 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>21</x><y>7</y><w>147</w><h>91</h></coordinates><panel_attributes>/&lt;&lt;enum&gt;&gt;/
+Genero
+--
++ MASCULINO
++ FEMENINO
+- descripcion: String
+--
++ getDescripcion(): String
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>196</x><y>7</y><w>147</w><h>112</h></coordinates><panel_attributes>/&lt;&lt;enum&gt;&gt;/
+ColorPelo
+--
++ COLORADO
++ NEGRO
++ AMARILLO
++ NINGUNO
+- descripcion: String
+--
++ getDescripcion(): String
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>49</x><y>224</y><w>238</w><h>189</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+Persona
+--
+- id: int
+- nombre: String
+- apellido: String
+- esCalvo: boolean
+- usaLentes: boolean
+- esElegido: boolean
+--
++ getId(): int
++ getNombreCompleto(): String
++ getGenero(): Genero
++ esCalvo(): boolean
++ usaLentes(): boolean
++ getColorPelo(): ColorPelo
++ esElegido() boolean
++ setEsElegido(boolean) void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>63</x><y>91</y><w>112</w><h>147</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- genero</panel_attributes><additional_attributes>10;10;10;110;140;110;140;190</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>112</y><w>119</w><h>126</h></coordinates><panel_attributes>lt=&lt;-
+m1= 1
+- colorPelo</panel_attributes><additional_attributes>140;10;140;80;10;80;10;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>441</x><y>224</y><w>238</w><h>203</h></coordinates><panel_attributes>/&lt;&lt;ValueObject / Factory Method&gt;&gt;/
+FiltroPregunta
+--
+- enunciado: String
+- minId: int
+- maxId: int
+--
++ cumple(Persona): boolean
++ getTipo: Tipo
++ getEnunciado(): String
++ esMasculino():$ FiltroPregunta
++ esFemenino():$ FiltroPregunta
++ esCalvo():$ FiltroPregunta
++ tienePelo():$ FiltroPregunta
++ usaLentes():$ FiltroPregunta
++ noUsaLentes():$ FiltroPregunta
++ peloColorado():$ FiltroPregunta
++ peloNegro():$ FiltroPregunta
++ peloAmarillo():$ FiltroPregunta
++ rangoIds(int, int):$ FiltroPregunta</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>329</y><w>175</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- predicado: Predicate&lt;Persona&gt;</panel_attributes><additional_attributes>10;20;230;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>28</x><y>469</y><w>210</w><h>77</h></coordinates><panel_attributes>/&lt;&lt;Factory&gt;&gt;/
+&lt;CatalogoPersonajes&gt;
+--
++ TOTAL_PERSONAJES: int = 23
+--
++ crearCatalogoOficial()$ List&lt;Persona&gt;
++ clonarCatalogo(List&lt;Persona&gt;)$ List&lt;Persona&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>371</x><y>0</y><w>147</w><h>168</h></coordinates><panel_attributes>/&lt;&lt;enum&gt;&gt;/
+FiltroPregunta.Tipo
+--
++ GENERO_MASCULINO
++ GENERO_FEMENINO
++ ES_CALVO
++ TIENE_PELO
++ USA_LENTES
++ NO_USA_LENTES
++ PELO_COLORADO
++ PELO_NEGRO
++ PELO_AMARILLO
++ RANGO_ID
+--
+- textoPorDefecto: String
++ getTextoPorDefecto(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>462</x><y>161</y><w>21</w><h>77</h></coordinates><panel_attributes>lt=(+)-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>63</x><y>665</y><w>252</w><h>77</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+*JugadorHumano*
+--
+
+--
++ JugadorHumano(String, Persona, List&lt;Persona&gt;)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>371</x><y>483</y><w>252</w><h>154</h></coordinates><panel_attributes>/&lt;&lt;abstract&gt;&gt;/
+/Jugador/
+--
+# nombre: String
+# Set&lt;FiltroPregunta&gt; preguntasRealizadas
+--
++ getNombre(): String
++ getPersonajeSecreto(): Persona
++ getCandidatosRestantes(): List&lt;Persona&gt;
++ getCantidadCandidatosRestantes(): int
++ aplicarFiltro(FiltroPregunta, boolean): int
++ descartarCandidatoPorId(int): boolean
++ tieneCertezaAbsoluta(): boolean
++ getCandidatoUnico(): Persona
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>371</x><y>672</y><w>238</w><h>77</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+*JugadorMaquina1*
+--
+
+--
++ JugadorMaquina1(String, Persona, List&lt;Persona&gt;)
++ decidirSiguientePaso(): DecisionTurno</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>651</x><y>644</y><w>294</w><h>119</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+*JugadorMaquina2*
+--
+- nombreOponente: String
+--
++ JugadorMaquina2(String, Persona, List&lt;Persona&gt;, HistorialPreguntas)
++ setNombreOponente(String): void
++ asimilarPreguntasDeMaquina1(): int
++ decidirSiguientePaso(): DecisionTurno</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>630</y><w>175</w><h>42</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;40;230;40</additional_attributes></element><element><id>Relation</id><coordinates><x>189</x><y>630</y><w>322</w><h>49</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>440;10;440;40;10;40;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>490</x><y>630</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1015</x><y>812</y><w>196</w><h>119</h></coordinates><panel_attributes>/&lt;&lt;ValueObject&gt;&gt;/
+RangoGrupo
+--
+- minId: int
+- maxId:int
+--
++ getMinId(): int
++ getMaxId(): int
++ getPersonajes(): List&lt;Persona&gt;
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>364</y><w>798</w><h>462</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;110;10;110;120;1120;120;1120;640</additional_attributes></element><element><id>UMLClass</id><coordinates><x>693</x><y>462</y><w>245</w><h>154</h></coordinates><panel_attributes>/&lt;&lt;ValueObject&gt;&gt;/
+DecisionTurno
+--
+- tipoAccion: TipoAccion
+- pregunta: FiltroPregunta
+- personaAdivinada: Persona
+- razonamiento: String
+--
++ crearPregunta(FiltroPregunta, String)$ DecisionTurno
++ crearAdivinanza(Persona, String)$ DecisionTurno
++ getTipoAccion() TipoAccion
++ getPregunta() FiltroPregunta
++ getPersonaAdivinada() Persona
++ getRazonamiento() String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>21</x><y>770</y><w>252</w><h>105</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+ArbitroJuego
+--
+- jugador1: Jugador
+- jugador2: Jugador
+- historialPreguntas: HistorialPreguntas
+--
++ responderPregunta(Jugador, FiltroPregunta, int) boolean
++ validarSuposicionDirecta(Jugador, int) boolean
++ getOponenteDe(Jugador) Jugador</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>357</x><y>798</y><w>252</w><h>189</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+PartidaAdivinaQuien
+--
+- jugador1: Jugador
+- jugador2: Jugador
+- arbitro: ArbitroJuego
+-  historialPreguntas: HistorialPreguntas
+- marcadorRecord: MarcadorRecord
+- int turnoActual
+- Jugador ganador
+- boolean partidaFinalizada
+--
++ ejecutarSimulacionMaquinaVsMaquina(boolean) Jugador
++ jugarTurnoHumanoPregunta(FiltroPregunta) boolean
++ jugarTurnoHumanoAdivinanza(int) boolean
++ jugarTurnoMaquina(boolean) DecisionTurno
++ avanzarTurno() void
++ estaFinalizada() boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>637</x><y>798</y><w>294</w><h>133</h></coordinates><panel_attributes>&lt;&lt;Facade&gt;&gt;
+JuegoAdivinaQuien
+--
+- personajes: List&lt;Persona&gt;
+- mapaPersonajesById: Map&lt;Integer, Persona&gt;
+- elegido: Persona
+--
++ inicializarPersonajes(): void
++ crearPartidaHumanoVsMaquina(String, int, int): PartidaAdivinaQuien
++ crearPartidaMaquinaVsMaquina(): PartidaAdivinaQuien
++ obtenerComodinGrupos(int): RangoGrupo
++ resolverAutomaticamente(EstrategiaResolucion): Persona</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>91</x><y>406</y><w>21</w><h>77</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>1050</y><w>252</w><h>133</h></coordinates><panel_attributes>/&lt;&lt;Singleton&gt;&gt;/
+MarcadorRecord
+--
++ ARCHIVO_JSON_DEFAULT$: String
+- instancia$: MarcadorRecord
+-  victoriasPorUsuario: Map&lt;String, Integer&gt;
+--
++ getInstancia()$: MarcadorRecord
++ registrarVictoria(String): void
++ obtenerVictorias(String): int
++ obtenerRanking(): List&lt;RegistroRanking&gt;
++ guardarEnJson(String): void
++ cargarDesdeJsonSiExiste(String): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>245</x><y>406</y><w>238</w><h>147</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- List&lt;Persona&gt; candidatosRestantes</panel_attributes><additional_attributes>10;10;10;40;120;40;120;190;180;190</additional_attributes></element><element><id>Relation</id><coordinates><x>189</x><y>406</y><w>196</w><h>168</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- personajeSecreto</panel_attributes><additional_attributes>10;10;10;60;110;60;110;220;260;220</additional_attributes></element><element><id>UMLClass</id><coordinates><x>714</x><y>14</y><w>294</w><h>77</h></coordinates><panel_attributes>/&lt;&lt;Utility&gt;&gt;/
+FiltroParticion
+--
+
+--
++ dividir(List&lt;Persona&gt;, FiltroPregunta):$ ResultadoParticion
++ podarEspacio(List&lt;Persona&gt;, FiltroPregunta, boolean):$ List&lt;Persona&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>84</y><w>476</w><h>196</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;260;110;260;110;160;400;160;400;30;660;30;660;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1029</x><y>7</y><w>196</w><h>119</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+ResultadoParticion
+--
+- List&lt;Persona&gt; cumplen
+- List&lt;Persona&gt; noCumplen
+- maxId:int
+--
++ getCumple(): List&lt;Persona&gt;
++ getNoCumplen(): List&lt;Persona&gt;
++ seleccionarSubconjunto(boolean): List&lt;Persona&gt;
++ getDiferenciaBalance(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>903</x><y>84</y><w>140</w><h>42</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- produce</panel_attributes><additional_attributes>180;30;10;30;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>707</x><y>168</y><w>357</w><h>84</h></coordinates><panel_attributes>/&lt;&lt;Utility&gt;&gt;/
+SelectorPreguntaGreedy
+--
+
+--
++ seleccionarMejorPregunta(List&lt;Persona&gt;, Set&lt;FiltroPregunta&gt;):$ EvaluacionGreedy
++ generarPreguntaRangoDicotomico(List&lt;Persona&gt;): $ FiltroPregunta
++ generarBancoPreguntasAtributos()$ List&lt;FiltroPregunta&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>119</y><w>819</w><h>161</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;210;110;210;110;110;400;110;400;30;1150;30;1150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>175</y><w>441</w><h>105</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;130;110;130;110;30;540;30;540;10;610;10</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>245</y><w>77</w><h>63</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;70;90;70;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1162</x><y>168</y><w>196</w><h>119</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+EvaluacionGreedy
+--
+- pregunta: FiltroPregunta
+- diferenciaBalance: int
+- cantidadCumplen: int
+- cantidadNoCumplen: int
+- totalCandidatos: int
+--
++ getPregunta(): FiltroPregunta
++ getDiferenciaBalance(): int
++ getCantidadCumplen(): int
++ getCantidadNoCumplen(): int
++ getExplicacionAlgoritmica(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>259</y><w>504</w><h>49</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;50;90;50;90;30;530;30;530;10;700;10</additional_attributes></element><element><id>Relation</id><coordinates><x>924</x><y>833</y><w>105</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- produce</panel_attributes><additional_attributes>130;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1057</x><y>203</y><w>119</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- produce</panel_attributes><additional_attributes>150;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>714</x><y>308</y><w>357</w><h>91</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+HistorialPreguntas
+--
+- entradas: List&lt;EntradaHistorial&gt;
+--
++ registrar(String, String, FiltroPregunta, boolean, int): void
++ getEntradas(): List&lt;EntradaHistorial&gt;
++ getEntradasSobre(String): List&lt;EntradaHistorial&gt;
++ limpiar(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1106</x><y>329</y><w>196</w><h>119</h></coordinates><panel_attributes>/&lt;&lt;class&gt;&gt;/
+EntradaHistorial
+--
+- emisor: String
+- objetivo: String
+- pregunta: FiltroPregunta
+- respuesta: boolean
+- turno:int
+--
++ getEmisor(): String
++ getObjetivo(): String
++ getPregunta(): FiltroPregunta
++ getRespuesta(): boolean
++ getTurno() int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1064</x><y>308</y><w>147</w><h>35</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+- almacena</panel_attributes><additional_attributes>10;20;190;20;190;30</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>413</y><w>448</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;620;10</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>350</y><w>56</w><h>21</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>469</x><y>980</y><w>63</w><h>84</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+- actualiza</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>266</x><y>392</y><w>749</w><h>441</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+- retorna</panel_attributes><additional_attributes>10;600;70;600;70;560;1050;560;1050;10</additional_attributes></element><element><id>Relation</id><coordinates><x>266</x><y>847</y><w>105</w><h>98</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+- coordina</panel_attributes><additional_attributes>10;10;50;10;50;120;130;120</additional_attributes></element><element><id>Relation</id><coordinates><x>0</x><y>329</y><w>777</w><h>721</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- catalogo</panel_attributes><additional_attributes>70;10;10;10;10;1010;1090;1010;1090;860</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>539</y><w>462</w><h>273</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;100;200;100;200;320;600;320;640;370</additional_attributes></element><element><id>Relation</id><coordinates><x>602</x><y>924</y><w>105</w><h>56</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;60;130;60;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>588</x><y>581</y><w>119</w><h>105</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>150;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>7</x><y>378</y><w>392</w><h>308</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>60;10;10;10;10;260;130;260;130;370;540;370;540;420</additional_attributes></element><element><id>Relation</id><coordinates><x>7</x><y>378</y><w>105</w><h>301</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>60;10;10;10;10;260;130;260;130;410</additional_attributes></element><element><id>Relation</id><coordinates><x>938</x><y>392</y><w>210</w><h>322</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- historialCompartido: HistorialPreguntas</panel_attributes><additional_attributes>50;10;50;440;10;440</additional_attributes></element><element><id>Relation</id><coordinates><x>938</x><y>441</y><w>427</w><h>315</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+- entradasProcesadas: Set&lt;EntradaHistorial&gt; </panel_attributes><additional_attributes>340;10;340;430;10;430</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>364</y><w>399</w><h>294</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;110;10;110;120;550;120;550;400</additional_attributes></element><element><id>Relation</id><coordinates><x>882</x><y>602</y><w>21</w><h>49</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>805</x><y>980</y><w>182</w><h>63</h></coordinates><panel_attributes>/&lt;&lt;interface&gt;&gt;/
+EstrategiaResolucion
+--
+/+ getNombre(): String/
+/+ resolver(List&lt;Persona&gt;): Persona/</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>868</x><y>924</y><w>21</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>105</x><y>1078</y><w>140</w><h>91</h></coordinates><panel_attributes>/&lt;&lt;Singleton&gt;&gt;/
+RegistroRanking
+--
+- JUGADOR: string
+- VICTORIAS: int
+--
++ getJugador(): String
++ getVictorias(): int
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>238</x><y>1127</y><w>126</w><h>21</h></coordinates><panel_attributes>lt=(+)-</panel_attributes><additional_attributes>10;10;160;10</additional_attributes></element><element><id>Relation</id><coordinates><x>525</x><y>415</y><w>105</w><h>84</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+-preguntasRealizadas</panel_attributes><additional_attributes>10;100;10;70;120;70;120;10</additional_attributes></element></diagram>
