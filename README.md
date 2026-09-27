@@ -206,9 +206,29 @@ El comportamiento del sistema está validado mediante una batería exhaustiva de
 # 1. Compilar todo el proyecto
 javac -encoding UTF-8 -d out (Get-ChildItem -Recurse -Filter *.java src | Select-Object -ExpandProperty FullName)
 
-# 2. Ejecutar Suite de Pruebas (9/9 OK)
-java -cp out ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.test.JuegoTest
+# 2. Ejecutar Suite de Pruebas (9/9 OK) sin alterar el marcador de la raíz
+Push-Location out
+java -cp . ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.test.JuegoTest
+Pop-Location
 
 # 3. Iniciar Juego Interactivo por Consola
 java -cp out ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.Main
 ```
+
+### Interfaz gráfica Swing (Java 17+)
+
+Con el proyecto compilado como arriba, desde la raíz del repositorio:
+
+```powershell
+# Abrir la versión gráfica (la versión de consola sigue disponible)
+java -cp out ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.ui.SwingMain
+
+# Probar los botones y la simulación en modo headless (sin ventana)
+Push-Location out
+java -cp . ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.test.SwingUITest
+Pop-Location
+```
+
+Para jugar dos rondas enlazadas, gana primero contra Máquina 1 y pulsa **Continuar contra Máquina 2** en la pantalla de victoria. Conservas tu personaje secreto y nombre; Máquina 2 recibe las preguntas y respuestas que Máquina 1 formuló sobre tu personaje y las aplica en su primer turno. El botón del menú **Humano vs Máquina 2 (partida nueva)** sigue comenzando sin pistas previas. Si venciste antes de que Máquina 1 preguntara, no habrá pistas para heredar. Las adivinanzas directas fallidas de Máquina 1 no están registradas en el historial, por lo que no se transfieren.
+
+La interfaz requiere un entorno gráfico para abrir la ventana; ambas versiones leen y guardan el marcador en `marcador_record.json` relativo al directorio desde el que se ejecuta Java.
