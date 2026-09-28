@@ -9,6 +9,8 @@ import ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.modelos.FiltroPregunta
 import ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.modelos.Persona;
 import ar.edu.uade.pr3.ejercicios.ejercicio_adivina_quien.persistencia.MarcadorRecord;
 
+import java.util.function.Consumer;
+
 /**
  * Controlador del flujo y ciclo de vida de una partida de "Adivina Quién".
  */
@@ -78,58 +80,62 @@ public class PartidaAdivinaQuien {
      * Ejecuta una simulación completa paso a paso de Máquina vs Máquina con reporte por consola.
      */
     public Jugador ejecutarSimulacionMaquinaVsMaquina(boolean modoDetallado) {
+        return ejecutarSimulacionMaquinaVsMaquina(modoDetallado, System.out::print);
+    }
+
+    public Jugador ejecutarSimulacionMaquinaVsMaquina(boolean modoDetallado, Consumer<String> salida) {
         if (modoDetallado) {
-            System.out.println("\n==========================================================================");
-            System.out.println("     INICIANDO MODO SIMULACIÓN: MÁQUINA 1 vs MÁQUINA 2");
-            System.out.println("==========================================================================");
-            System.out.printf("Jugador 1: %s [Secreto elegido: ID %d - %s]%n",
-                    jugador1.getNombre(), jugador1.getPersonajeSecreto().getId(), jugador1.getPersonajeSecreto().getNombreCompleto());
-            System.out.printf("Jugador 2: %s [Secreto elegido: ID %d - %s]%n",
-                    jugador2.getNombre(), jugador2.getPersonajeSecreto().getId(), jugador2.getPersonajeSecreto().getNombreCompleto());
-            System.out.println("--------------------------------------------------------------------------\n");
+            salida.accept("\n==========================================================================\n");
+            salida.accept("     INICIANDO MODO SIMULACIÓN: MÁQUINA 1 vs MÁQUINA 2\n");
+            salida.accept("==========================================================================\n");
+            salida.accept(String.format("Jugador 1: %s [Secreto elegido: ID %d - %s]%n",
+                    jugador1.getNombre(), jugador1.getPersonajeSecreto().getId(), jugador1.getPersonajeSecreto().getNombreCompleto()));
+            salida.accept(String.format("Jugador 2: %s [Secreto elegido: ID %d - %s]%n",
+                    jugador2.getNombre(), jugador2.getPersonajeSecreto().getId(), jugador2.getPersonajeSecreto().getNombreCompleto()));
+            salida.accept("--------------------------------------------------------------------------\n\n");
         }
 
         while (!partidaFinalizada && turnoActual < 100) {
             turnoActual++;
 
             if (modoDetallado) {
-                System.out.printf(">>> [RONDA %d] <<<%n", turnoActual);
+                salida.accept(String.format(">>> [RONDA %d] <<<%n", turnoActual));
             }
 
             // Turno Jugador 1
-            procesarTurnoIA(jugador1, modoDetallado);
+            procesarTurnoIA(jugador1, modoDetallado, salida);
             if (partidaFinalizada) break;
 
             // Turno Jugador 2
-            procesarTurnoIA(jugador2, modoDetallado);
+            procesarTurnoIA(jugador2, modoDetallado, salida);
             if (partidaFinalizada) break;
 
             if (modoDetallado) {
-                System.out.printf("--- Fin de Ronda %d: Candidatos restantes -> %s: %d | %s: %d ---%n%n",
+                salida.accept(String.format("--- Fin de Ronda %d: Candidatos restantes -> %s: %d | %s: %d ---%n%n",
                         turnoActual,
                         jugador1.getNombre(), jugador1.getCantidadCandidatosRestantes(),
-                        jugador2.getNombre(), jugador2.getCantidadCandidatosRestantes());
+                        jugador2.getNombre(), jugador2.getCantidadCandidatosRestantes()));
             }
         }
 
         if (ganador != null) {
             marcadorRecord.registrarVictoria(ganador.getNombre());
             if (modoDetallado) {
-                System.out.println("\n==========================================================================");
-                System.out.printf("   ¡VICTORIA PARA: %s en %d turnos!%n", ganador.getNombre(), turnoActual);
-                System.out.printf("   Personaje adivinado correctamente: %s (ID %d)%n",
+                salida.accept("\n==========================================================================\n");
+                salida.accept(String.format("   ¡VICTORIA PARA: %s en %d turnos!%n", ganador.getNombre(), turnoActual));
+                salida.accept(String.format("   Personaje adivinado correctamente: %s (ID %d)%n",
                         arbitro.getOponenteDe(ganador).getPersonajeSecreto().getNombreCompleto(),
-                        arbitro.getOponenteDe(ganador).getPersonajeSecreto().getId());
-                System.out.printf("   Total victorias acumuladas de %s: %d%n",
-                        ganador.getNombre(), marcadorRecord.obtenerVictorias(ganador.getNombre()));
-                System.out.println("==========================================================================\n");
+                        arbitro.getOponenteDe(ganador).getPersonajeSecreto().getId()));
+                salida.accept(String.format("   Total victorias acumuladas de %s: %d%n",
+                        ganador.getNombre(), marcadorRecord.obtenerVictorias(ganador.getNombre())));
+                salida.accept("==========================================================================\n\n");
             }
         }
 
         return ganador;
     }
 
-    private void procesarTurnoIA(Jugador jugadorIA, boolean modoDetallado) {
+    private void procesarTurnoIA(Jugador jugadorIA, boolean modoDetallado, Consumer<String> salida) {
         DecisionTurno decision;
 
         if (jugadorIA instanceof JugadorMaquina1) {
@@ -145,9 +151,9 @@ public class PartidaAdivinaQuien {
         if (decision.getTipoAccion() == DecisionTurno.TipoAccion.ADIVINAR_PERSONAJE) {
             Persona suposicion = decision.getPersonaAdivinada();
             if (modoDetallado) {
-                System.out.printf("[%s] Decide ADIVINAR DIRECTAMENTE: ID %d (%s)%n",
-                        jugadorIA.getNombre(), suposicion.getId(), suposicion.getNombreCompleto());
-                System.out.printf("    Razonamiento: %s%n", decision.getRazonamiento());
+                salida.accept(String.format("[%s] Decide ADIVINAR DIRECTAMENTE: ID %d (%s)%n",
+                        jugadorIA.getNombre(), suposicion.getId(), suposicion.getNombreCompleto()));
+                salida.accept(String.format("    Razonamiento: %s%n", decision.getRazonamiento()));
             }
 
             boolean acierto = arbitro.validarSuposicionDirecta(jugadorIA, suposicion.getId());
@@ -155,24 +161,24 @@ public class PartidaAdivinaQuien {
                 ganador = jugadorIA;
                 partidaFinalizada = true;
                 if (modoDetallado) {
-                    System.out.printf("    -> ¡ACIERTO ROTUNDO! %s descubrió el personaje secreto.%n", jugadorIA.getNombre());
+                    salida.accept(String.format("    -> ¡ACIERTO ROTUNDO! %s descubrió el personaje secreto.%n", jugadorIA.getNombre()));
                 }
             } else {
                 if (modoDetallado) {
-                    System.out.printf("    -> FALLO. El personaje no era %s. Descartado del espacio de búsqueda.%n", suposicion.getNombreCompleto());
+                    salida.accept(String.format("    -> FALLO. El personaje no era %s. Descartado del espacio de búsqueda.%n", suposicion.getNombreCompleto()));
                 }
             }
         } else {
             FiltroPregunta pregunta = decision.getPregunta();
             if (modoDetallado) {
-                System.out.printf("[%s] Pregunta: \"%s\"%n", jugadorIA.getNombre(), pregunta.getEnunciado());
-                System.out.printf("    Estrategia: %s%n", decision.getRazonamiento());
+                salida.accept(String.format("[%s] Pregunta: \"%s\"%n", jugadorIA.getNombre(), pregunta.getEnunciado()));
+                salida.accept(String.format("    Estrategia: %s%n", decision.getRazonamiento()));
             }
 
             boolean respuesta = arbitro.responderPregunta(jugadorIA, pregunta, turnoActual);
             if (modoDetallado) {
-                System.out.printf("    Árbitro responde: [%s]. Candidatos restantes de %s: %d%n",
-                        (respuesta ? "SÍ" : "NO"), jugadorIA.getNombre(), jugadorIA.getCantidadCandidatosRestantes());
+                salida.accept(String.format("    Árbitro responde: [%s]. Candidatos restantes de %s: %d%n",
+                        (respuesta ? "SÍ" : "NO"), jugadorIA.getNombre(), jugadorIA.getCantidadCandidatosRestantes()));
             }
         }
     }
@@ -223,10 +229,14 @@ public class PartidaAdivinaQuien {
      * @return DecisionTurno tomada por la IA.
      */
     public DecisionTurno jugarTurnoMaquina(boolean modoDetallado) {
+        return jugarTurnoMaquina(modoDetallado, System.out::print);
+    }
+
+    public DecisionTurno jugarTurnoMaquina(boolean modoDetallado, Consumer<String> salida) {
         if (partidaFinalizada) {
             throw new IllegalStateException("La partida ya ha finalizado.");
         }
-        procesarTurnoIA(jugador2, modoDetallado);
+        procesarTurnoIA(jugador2, modoDetallado, salida);
         if (ganador != null && ganador.equals(jugador2)) {
             marcadorRecord.registrarVictoria(jugador2.getNombre());
         }
